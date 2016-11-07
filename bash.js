@@ -71,9 +71,11 @@ process.stdin.on('data', function (data){
 	} else if (input.includes('head')) {
 		var filename = input.slice(5);
 		commands.head(filename);
+	} else if (input.includes('tail')){
+		var filename = input.slice(5)
+		commands.tail(filename);
+	} else if (input.includes('curl')){
+		var filename = input.slice(5)
+		commands.curl(filename);
 	}
 })
-
-
-
-
