@@ -1,32 +1,24 @@
 var fs = require('fs');
 var request = require('request')
+var dateFormat = require('dateformat');
 
 function pwd (filename) {
-    process.stdout.write(process.env['PWD']);
-    process.stdout.write('\nprompt > ');
+    var dir = process.env['PWD'];
+    done(dir);
 }
 
-/*
-Date:
-
-else if (cmd === 'date') {
-            var myDate = new Date();
-            process.stdout.write(dateFormat(myDate)); // Format Example: Mon Nov  7 10:12:44 EST 2016
-        }
-
-*/
-
-// var exports = module.exports = {};
-// exports.pwd = pwd;
-
+// function date (filename) {
+//     var todaysDate = dateFormat(new Date());
+//     done(date);
+// }
 
 function ls(filename){
+    var fileDir = [];
     fs.readdir('.', function(err, files) {
         if (err) throw err;
         files.forEach(function(file) {
             process.stdout.write(file.toString() + "\n");
         })
-        process.stdout.write("prompt > ");
     });
 }
 
@@ -40,7 +32,6 @@ function echo(args, filename){
 }
 
 function cat (filename) {
-    var fileToFind = filename;
     fs.readFile(filename, function (err, data) {
         if (err) throw err;
         process.stdout.write(data);
@@ -68,7 +59,6 @@ function tail (filename){
 
 function curl(url){
     // process.stdout.write(request.get(url));
-    console.log(url)
     request(url, function (err, response, body) {
     if (err) throw err;
     if (!err && response.statusCode == 200) {

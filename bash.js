@@ -1,7 +1,4 @@
-var dateFormat = require('dateformat');
 var commands = require('./commands');
-var fs = require('fs');
-
 
 // console.log(process);
 // console.log(Object.keys(process));
