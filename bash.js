@@ -1,5 +1,7 @@
 var dateFormat = require('dateformat');
 var commands = require('./commands');
+var fs = require('fs');
+
 
 // console.log(process);
 // console.log(Object.keys(process));
@@ -52,4 +54,21 @@ Visit explainshell.com if you want to learn more about cat and head. Explain the
 
 // 5. SEPARATING COMMANDS INTO A SEPARATE FILE
 
-commands.pwd();
+process.stdout.write('prompt > ');
+process.stdin.on('data', function (data){
+	var input = data.toString().trim();
+	
+	if (input === 'pwd') {
+		commands.pwd()
+	} else if ( input === 'ls'){
+		commands.ls()
+	} else if(input.includes('echo')){
+
+		var args = input.slice(5)
+		commands.echo(args)
+	}  
+})
+
+
+
+
