@@ -63,10 +63,15 @@ process.stdin.on('data', function (data){
 	} else if ( input === 'ls'){
 		commands.ls()
 	} else if(input.includes('echo')){
-
-		var args = input.slice(5)
+		var args = input.slice(5);
 		commands.echo(args)
-	}  
+	} else if (input.includes('cat')) {
+		var filename = input.slice(4);
+		commands.cat(filename);
+	} else if (input.includes('head')) {
+		var filename = input.slice(5);
+		commands.head(filename);
+	}
 })
 
 

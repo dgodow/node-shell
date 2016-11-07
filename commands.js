@@ -1,16 +1,8 @@
 var fs = require('fs');
 
-function pwd () {
-    // Need to remove most of the function //
-
-    // process.stdout.write('prompt > ');
-    // process.stdin.on('data', function (data) {
-    //     var cmd = data.toString().trim();
-    //     if (cmd === 'pwd') {
-            process.stdout.write(process.env['PWD']);
-        // }
-        process.stdout.write('\nprompt > ');
-    // })
+function pwd (filename) {
+    process.stdout.write(process.env['PWD']);
+    process.stdout.write('\nprompt > ');
 }
 
 /*
@@ -27,8 +19,7 @@ else if (cmd === 'date') {
 // exports.pwd = pwd;
 
 
-function ls(){
-
+function ls(filename){
     fs.readdir('.', function(err, files) {
         if (err) throw err;
         files.forEach(function(file) {
@@ -36,22 +27,40 @@ function ls(){
         })
         process.stdout.write("prompt > ");
     });
-
 }
 
-function echo(args){
-    // var args = process.argv.slice(2).join(' ');
-
-    if(process.env[args.toUpperCase()]){
+function echo(args, filename){
+    if (process.env[args.toUpperCase()]) {
         process.stdout.write(process.env[args.toUpperCase()]);
-
-    } else process.stdout.write(args);
-
+    } else {
+        process.stdout.write(args);
+    }
     process.stdout.write("\nprompt > ");
+}
+
+function cat (filename) {
+    var fileToFind = filename;
+    fs.readFile(filename, function (err, data) {
+        if (err) throw err;
+        process.stdout.write(data);
+        process.stdout.write("\nprompt > ");
+    })
+}
+
+function head (filename) {
+    var fileToFind = filename;
+    fs.readFile(filename, function (err, data) {
+        if (err) throw err;
+        var stringData = data.toString().split('\n').slice(0,5);
+        process.stdout.write(stringData);
+        process.stdout.write("\nprompt > ");
+    })
 }
 
 module.exports = {
     pwd: pwd,
     ls: ls,
-    echo: echo
+    echo: echo,
+    cat: cat,
+    head: head
 }
